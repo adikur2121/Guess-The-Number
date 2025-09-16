@@ -1,41 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guess The Number</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess The Number Game</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-    h1 { color: #333; }
-    input { padding: 10px; margin: 10px; }
-    button { padding: 10px 20px; }
-    #message { margin-top: 20px; font-size: 1.2em; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 20px;
+    }
+    header img {
+      width: 80px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    h1 {
+      color: #333;
+      margin: 10px 0;
+    }
+    .game-container {
+      background: #fff;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 100px;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    p {
+      font-size: 18px;
+      margin: 15px 0;
+    }
+    .score {
+      font-weight: bold;
+      color: #222;
+    }
   </style>
 </head>
 <body>
-  <h1>Guess The Number Game</h1>
-  <p>Guess a number between 1 and 100</p>
-  <input type="number" id="guess" min="1" max="100" />
-  <button onclick="checkGuess()">Submit Guess</button>
-  <p id="message"></p>
+  <header>
+    <!-- Logo -->
+    <img src="https://img.icons8.com/fluency/96/controller.png" alt="Game Logo">
+    <h1>Guess The Number</h1>
+  </header>
+
+  <div class="game-container">
+    <p>Guess a number between 1 and 100</p>
+    <input type="number" id="guess" min="1" max="100">
+    <button onclick="checkGuess()">Submit Guess</button>
+    <p id="message"></p>
+    <p class="score">Score: <span id="score">0</span></p>
+  </div>
 
   <script>
-    const randomNumber = Math.floor(Math.random() * 100) + 1;
-    let attempts = 0;
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let score = 0;
 
     function checkGuess() {
-      const guess = Number(document.getElementById('guess').value);
-      attempts++;
-      const message = document.getElementById('message');
-      
-      if (!guess) {
-        message.textContent = "Please enter a number!";
-      } else if (guess === randomNumber) {
-        message.textContent = `🎉 Correct! The number was ${randomNumber}. Attempts: ${attempts}`;
+      const guess = parseInt(document.getElementById("guess").value);
+      const message = document.getElementById("message");
+
+      if (guess === randomNumber) {
+        score += 10;
+        document.getElementById("score").textContent = score;
+        message.textContent = "🎉 Correct! A new number is generated!";
+        message.style.color = "green";
+        randomNumber = Math.floor(Math.random() * 100) + 1; // reset number
       } else if (guess < randomNumber) {
         message.textContent = "Too low! Try again.";
+        message.style.color = "red";
       } else {
         message.textContent = "Too high! Try again.";
+        message.style.color = "red";
       }
     }
   </script>
